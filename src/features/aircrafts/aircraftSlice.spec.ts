@@ -1,5 +1,5 @@
 
-import {Aircraft, AircraftState} from './types'
+import {AircraftState} from './types'
 
 import aircraftReducer, {
     selectAircraft

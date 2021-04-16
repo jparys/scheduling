@@ -1,19 +1,19 @@
 import React from 'react';
 import Alert from 'react-bootstrap/Alert';
-//import ' /App.css';
-// import {
-//     selectAircraft,
-//     fetchAircraftsAsync,
-//     selectAircrafts
-// } from './flightSlice'
+//import { ArrowRight } from 'react-bootstrap-icons';
+import * as Icon from 'react-bootstrap-icons';
+
+import {
+    schedule
+} from './flightSlice'
 
 import Container from 'react-bootstrap/Container';
-import { Row, Col, ProgressBar } from "react-bootstrap";
-import CSS from 'csstype';
+import { Row, Col } from "react-bootstrap";
+
 
 import { Flight, } from './types'
 
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { useAppDispatch } from '../../app/hooks';
 
 export function FlightDetails(props: Flight) {
     const dispatch = useAppDispatch();
@@ -23,6 +23,13 @@ export function FlightDetails(props: Flight) {
                 key={props.id}
                 variant={'success'}
             >
+
+                <Icon.PlusCircle 
+                onClick={() =>{
+                    dispatch(schedule(props.id))
+
+                }} 
+                 size={30} ></Icon.PlusCircle>
                 <b>
                 {props.id}
                 </b>

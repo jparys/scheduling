@@ -1,5 +1,5 @@
 
-import { Aircraft, AircraftState } from '../features/aircrafts/types'
+import { Aircraft } from '../features/aircrafts/types'
 import { Flight,  } from '../features/flights/types'
 
 export function fetchAircrafts() {

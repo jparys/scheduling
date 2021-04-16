@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import React from 'react';
+import { useAppSelector } from '../../app/hooks';
 import { store } from '../../app/store';
 import {
     fetchAircraftsAsync,

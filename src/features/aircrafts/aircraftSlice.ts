@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../app/store';
+import { RootState} from '../../app/store';
 
-import {Aircraft, AircraftState} from './types'
+import {AircraftState} from './types'
 import { fetchAircrafts } from '../../api/aircraftAPI';
 
 //[{"ident":"GABCD","type":"A320","economySeats":186,"base":"EGKK"}]

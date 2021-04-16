@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { store } from '../../app/store';
 import {
@@ -21,7 +21,7 @@ export function FlightList() {
 
     useEffect(() => {
         dispatch(fetchFlightsAsync(selectedAicraft?.base|| ""));
-      }, [selectedAicraft]); 
+      }, [selectedAicraft, dispatch]); 
 
     if (aircraftsListState.status === 'loading') {
         return (<div>Loading...</div>)
