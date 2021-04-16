@@ -37,3 +37,16 @@
     transform: translateY(0px);
   }
 }
+
+.container {
+  flex-direction: row ;
+overflow: hidden;
+}
+
+.first {
+  float: left;
+}
+
+.second {
+  float: right;
+}
