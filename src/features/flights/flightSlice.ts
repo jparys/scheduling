@@ -1,22 +1,25 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-import { FlightState} from './types'
-import {  fetchFlightsByOrigin} from '../../api/aircraftAPI';
+import { FlightState } from '../../common/types'
+import { fetchFlightsByOriginAndTime } from '../../api/aircraftAPI';
+
+export interface Parameters {
+  origine: string;
+  time: number
+}
 
 export const fetchFlightsAsync = createAsyncThunk(
-    'flight/fetchFlights',
-    async (origine: string) => {
-      const response = await fetchFlightsByOrigin(origine);
-      // The value we return becomes the `fulfilled` action payload
-      return response;
-    }
-  );
-
+  'flight/fetchFlights',
+  async (parameter: Parameters) => {
+    const response = await fetchFlightsByOriginAndTime(parameter.origine, parameter.time);
+    return response;
+  }
+);
 
 const initialState: FlightState = {
-   flights : [],
-   status: 'idle'
+  flights: [],
+  status: 'idle'
 };
 
 export const aircraftSlice = createSlice({
@@ -24,10 +27,9 @@ export const aircraftSlice = createSlice({
   initialState,
   reducers: {
     schedule: (state, action: PayloadAction<string>) => {
-       //state.aircrafts.forEach(el => el.selected = false)
-       let result = state.flights.find(el => el.id === action.payload)
-       if(result)
-            result.scheduled = true;
+      let result = state.flights.find(el => el.id === action.payload)
+      if (result)
+        result.scheduled = true;
     },
   },
   extraReducers: (builder) => {
@@ -39,7 +41,7 @@ export const aircraftSlice = createSlice({
         state.status = 'idle';
         state.flights = action.payload;
       });
-    },
+  },
 });
 
 export const selectFlights = (state: RootState) => state.flight;

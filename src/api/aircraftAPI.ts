@@ -1,6 +1,5 @@
 
-import { Aircraft } from '../features/aircrafts/types'
-import { Flight,  } from '../features/flights/types'
+import { Aircraft, Flight } from '../common/types'
 
 export function fetchAircrafts() {
     return new Promise<Aircraft[]>((resolve) =>
@@ -8,7 +7,7 @@ export function fetchAircrafts() {
             [{ "ident": "GABCD", "type": "A320", "economySeats": 186, "base": "EGKK", "selected": false },
             { "ident": "GABCD1", "type": "A320", "economySeats": 186, "base": "LFMN", "selected": true },
             { "ident": "GABCD2", "type": "A320", "economySeats": 186, "base": "LFSB", "selected": false }
-        ]), 1000)
+        ]), 500)
     );
 }
 
@@ -26,15 +25,26 @@ const flights = [
 
 export function fetchFlights() {
     return new Promise<Flight[]>((resolve) =>
-        setTimeout(() => resolve(flights), 1000)
+        setTimeout(() => resolve(flights), 500)
     );
 }
 
 export function fetchFlightsByOrigin(origin: string) {
     return new Promise<Flight[]>((resolve) =>
         setTimeout(() => resolve(
-            flights.filter(e => e.origin===origin)
-        ), 1000)
+            flights.filter(e => e.origin===origin).sort((first, second) => {
+                return first.departuretime > second.departuretime? 1 : -1;
+            })
+        ), 500)
     );
 }
 
+export function fetchFlightsByOriginAndTime(origin: string, time:number) {
+    return new Promise<Flight[]>((resolve) =>
+        setTimeout(() => resolve(
+            flights.filter(e => e.origin===origin && e.departuretime >= time).sort((first, second) => {
+                return first.departuretime > second.departuretime? 1 : -1;
+            })
+        ), 500)
+    );
+}

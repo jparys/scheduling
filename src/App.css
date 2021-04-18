@@ -50,3 +50,13 @@ overflow: hidden;
 .second {
   float: right;
 }
+
+.progress-bar-idle {
+  background-color: rgb(232, 238, 238) !important;
+}
+.progress-bar-flight {
+  background-color: rgb(75, 192, 100) !important;
+}
+.progress-bar-turnaround {
+  background-color: orange !important;
+}

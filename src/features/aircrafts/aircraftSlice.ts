@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState} from '../../app/store';
 
-import {AircraftState} from './types'
+import {AircraftState} from '../../common/types'
 import { fetchAircrafts } from '../../api/aircraftAPI';
-
+//import { FormatListNumberedOutlined } from '@material-ui/icons';
 //[{"ident":"GABCD","type":"A320","economySeats":186,"base":"EGKK"}]
 
 export const fetchAircraftsAsync = createAsyncThunk(
@@ -20,6 +20,11 @@ const initialState: AircraftState = {
    status: 'idle'
 };
 
+export interface AircraftInfo {
+   aircraftId : string;
+   utilizaton : number;
+}
+
 export const aircraftSlice = createSlice({
   name: 'aircraft',
   initialState,
@@ -29,6 +34,11 @@ export const aircraftSlice = createSlice({
        let result = state.aircrafts.filter(el => el.ident === action.payload)
        result[0].selected = true;
     },
+    setUtilization: (state, action: PayloadAction<AircraftInfo>) =>{
+        const aircraft =  state.aircrafts.find(el => el.ident === action.payload.aircraftId)
+        if(aircraft)
+          aircraft.utilization = action.payload.utilizaton
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -45,6 +55,6 @@ export const aircraftSlice = createSlice({
 export const selectAircrafts = (state: RootState) => state.aircraft;
 export const selectedAircraft = (state: RootState) => state.aircraft.aircrafts.find(e=> e.selected ===true);
 
-export const { selectAircraft } = aircraftSlice.actions;
+export const { selectAircraft, setUtilization } = aircraftSlice.actions;
 
 export default aircraftSlice.reducer;

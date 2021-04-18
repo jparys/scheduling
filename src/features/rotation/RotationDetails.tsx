@@ -1,33 +1,29 @@
-import React from 'react';
-import Alert from 'react-bootstrap/Alert';
-// import {
-//     selectAircraft,
-//     fetchAircraftsAsync,
-//     selectAircrafts
-// } from './aircraftSlice'
-// import { Aircraft, AircraftState } from './types'
-import { useAppSelector } from '../../app/hooks';
-import {
-    selectFlights
-} from '../flights/flightSlice'
-
-import {selectedAircraft} from '../aircrafts/aircraftSlice'
+import React, { useEffect } from 'react';
+import {selectCurrentRotation, createIfNotExists} from './rotationSlice'
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { selectedAircraft } from '../aircrafts/aircraftSlice'
+import {RotationFlights} from './RotationFlights'
 
 export function RotationDetails() {
-    //const dispatch = useAppDispatch();
-    const aircraftsListState = useAppSelector(selectFlights);
+    const dispatch = useAppDispatch();
+    const rotationDetaild = useAppSelector(selectCurrentRotation)
     const selectedAicraft = useAppSelector(selectedAircraft);
+
+    useEffect(() => {
+        if (selectedAicraft)
+            dispatch(createIfNotExists(selectedAicraft?.ident || ""));
+    }, [selectedAicraft, dispatch]);
+
     return (
         <div>
+            Rotation id: {rotationDetaild?.id}
+            <br />
+            Aircraft id: {rotationDetaild?.aircraftId}
+            <br />
             Rotation for aircraft: {selectedAicraft?.ident}
-            {aircraftsListState.flights
-                .filter(e => e.scheduled === true)
-                .map((value) => (
-                    <Alert variant={'secondary'}>
-                        {value.id} - From {value.origin} To {value.destination}
-                    </Alert>
-                ))}
 
+            <br/>  
+            <RotationFlights flights={rotationDetaild?.flights|| []}></RotationFlights>      
         </div>
     );
 }

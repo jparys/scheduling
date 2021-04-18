@@ -7,12 +7,15 @@ import {
     schedule
 } from './flightSlice'
 
+import {
+    scheduleFlightAction
+} from '../rotation/rotationSlice'
+
 import Container from 'react-bootstrap/Container';
 import { Row, Col } from "react-bootstrap";
 
 
-import { Flight, } from './types'
-
+import { Flight, } from '../../common/types'
 import { useAppDispatch } from '../../app/hooks';
 
 export function FlightDetails(props: Flight) {
@@ -27,6 +30,7 @@ export function FlightDetails(props: Flight) {
                 <Icon.PlusCircle 
                 onClick={() =>{
                     dispatch(schedule(props.id))
+                    dispatch(scheduleFlightAction(props))
 
                 }} 
                  size={30} ></Icon.PlusCircle>

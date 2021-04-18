@@ -1,35 +1,37 @@
 
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { store } from '../../app/store';
-import {
-    fetchFlightsAsync,
-    selectFlights
-} from './flightSlice'
-
-import {selectedAircraft} from '../aircrafts/aircraftSlice'
+import { fetchFlightsAsync, selectFlights } from './flightSlice'
+import { selectedAircraft } from '../aircrafts/aircraftSlice'
+import { selectLastLocation, selectLastArrivalTime } from '../rotation/rotationSlice'
 import { FlightDetails } from './FlightDetails'
-
-setTimeout(() => {
-    store.dispatch(fetchFlightsAsync("LFSB"));
-}, 0);
 
 export function FlightList() {
     const dispatch = useAppDispatch();
-    const aircraftsListState = useAppSelector(selectFlights);
+    const flightSliceState = useAppSelector(selectFlights);
     const selectedAicraft = useAppSelector(selectedAircraft);
+    const lastArrivalTime = useAppSelector(selectLastArrivalTime);
+    const lastLocation = useAppSelector(selectLastLocation)
 
     useEffect(() => {
-        dispatch(fetchFlightsAsync(selectedAicraft?.base|| ""));
-      }, [selectedAicraft, dispatch]); 
 
-    if (aircraftsListState.status === 'loading') {
+        console.log(lastLocation)
+        console.log(selectedAicraft)
+        console.log(lastArrivalTime)
+        let origin = selectedAicraft?.base
+        if (lastLocation)
+            origin = lastLocation
+        //const origin = selectedAicraft?.base
+        dispatch(fetchFlightsAsync({ origine: origin || "", time: lastArrivalTime }));
+    }, [selectedAicraft, lastArrivalTime, lastLocation, dispatch]);
+
+    if (flightSliceState.status === 'loading') {
         return (<div>Loading...</div>)
     }
     return (
         <div>
             Flight list: for base {selectedAicraft?.base}
-            {aircraftsListState
+            {flightSliceState
                 .flights
                 .filter(e => e.scheduled !== true)
                 .map((value, idx) => (
