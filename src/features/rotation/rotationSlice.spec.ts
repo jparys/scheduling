@@ -10,8 +10,7 @@ import rotationReducer, {
     // };
 
     it('should handle initial state', () => {
-      expect(rotationReducer(undefined, { type: 'unknown' })).toEqual({
-      });
+      expect(rotationReducer(undefined, { type: 'unknown' }))
     });
     
 

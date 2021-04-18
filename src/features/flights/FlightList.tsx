@@ -14,14 +14,9 @@ export function FlightList() {
     const lastLocation = useAppSelector(selectLastLocation)
 
     useEffect(() => {
-
-        console.log(lastLocation)
-        console.log(selectedAicraft)
-        console.log(lastArrivalTime)
         let origin = selectedAicraft?.base
         if (lastLocation)
             origin = lastLocation
-        //const origin = selectedAicraft?.base
         dispatch(fetchFlightsAsync({ origine: origin || "", time: lastArrivalTime }));
     }, [selectedAicraft, lastArrivalTime, lastLocation, dispatch]);
 
