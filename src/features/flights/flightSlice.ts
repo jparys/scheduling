@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-
 import { FlightState } from '../../common/types'
 import { fetchFlightsByOriginAndTime } from '../../api/aircraftAPI';
 

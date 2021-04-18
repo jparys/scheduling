@@ -65,3 +65,14 @@ overflow: hidden;
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.left {
+  padding-left: -10px;
+  margin-left: -15px;
+}
+
+.right {
+  
+  margin-right: -15px;
+}
+

@@ -3,7 +3,6 @@ import { Flight,} from '../../common/types'
 import { ProgressBar } from "react-bootstrap";
 import CSS from 'csstype';
 
-
 const ps: CSS.Properties = {
   height: '40px',
 };

@@ -1,20 +1,9 @@
 import React from 'react';
 import Alert from 'react-bootstrap/Alert';
-//import { ArrowRight } from 'react-bootstrap-icons';
 import * as Icon from 'react-bootstrap-icons';
-
-import {
-    schedule
-} from './flightSlice'
-
-import {
-    scheduleFlightAction
-} from '../rotation/rotationSlice'
-
-import Container from 'react-bootstrap/Container';
-import { Row, Col } from "react-bootstrap";
-
-
+import { schedule } from './flightSlice'
+import { scheduleFlightAction } from '../rotation/rotationSlice'
+import { Row, Col,Container } from "react-bootstrap";
 import { Flight, } from '../../common/types'
 import { useAppDispatch } from '../../app/hooks';
 
@@ -25,17 +14,23 @@ export function FlightDetails(props: Flight) {
             <Alert
                 key={props.id}
                 variant={'success'} >
-                <Icon.PlusCircle 
-                onClick={() =>{
-                    dispatch(schedule(props.id))
-                    dispatch(scheduleFlightAction(props))}} 
-                 size={30} >
-
-                 </Icon.PlusCircle>
-                <b>
-                {props.id}
-                </b>
                 <Container>
+                    <Row>
+                        <Col className={'text-left left'}>
+                            <Icon.ArrowLeftCircle
+                                onClick={() => {
+                                    dispatch(schedule(props.id))
+                                    dispatch(scheduleFlightAction(props))
+                                }}
+                                size={30} >
+                            </Icon.ArrowLeftCircle>
+                        </Col>
+                        <Col>
+                            <b>{props.id}</b>
+                        </Col>
+                        <Col>
+                        </Col>
+                    </Row>
                     <Row>
                         <Col>
                             <div>{props.origin}</div>

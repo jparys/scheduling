@@ -27,7 +27,7 @@ export function RotationFlightDetails(props: Flight) {
                         </Col>
                         <Col >
                             <Icon.FileMinus
-                                className={'float-right'}
+                                className={'float-right right'}
                                 onClick={() => {
                                     dispatch(removeFlightAction(props.id))
                                 }} size={30}
