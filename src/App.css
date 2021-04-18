@@ -60,3 +60,8 @@ overflow: hidden;
 .progress-bar-turnaround {
   background-color: orange !important;
 }
+
+.date-picker-container {
+  padding: 10px;
+  margin-bottom: 10px;
+}

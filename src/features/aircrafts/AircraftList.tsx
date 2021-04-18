@@ -7,6 +7,7 @@ import {
     selectAircrafts
 } from './aircraftSlice'
 import { AircraftDetails } from './AircraftDetails'
+import Alert from 'react-bootstrap/Alert';
 
 setTimeout(() => {
     store.dispatch(fetchAircraftsAsync());
@@ -15,11 +16,20 @@ setTimeout(() => {
 export function AircraftList() {
     const aircraftsListState = useAppSelector(selectAircrafts);
     if (aircraftsListState.status === 'loading') {
-        return (<div>Loading...</div>)
+        return (<div>
+            <Alert
+                variant={'success'} >
+                <b> Aircrafts </b>
+            </Alert>
+            <br/>
+            Loading...</div>)
     }
     return (
         <div>
-            Aircraft list:
+            <Alert
+                variant={'success'} >
+                <b> Aircrafts </b>
+            </Alert>
             {aircraftsListState
                 .aircrafts
                 .map((value, idx) => (

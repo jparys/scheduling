@@ -7,7 +7,6 @@ import { Utilization } from './Utilization'
 export function RotationFlights(props: { flights: Flight[] }) {
     return (
         <div>
-            Rotation Flighats:
             { props &&
                 props.flights
                     .map((value) => (

@@ -24,16 +24,14 @@ export function FlightDetails(props: Flight) {
         <div>
             <Alert
                 key={props.id}
-                variant={'success'}
-            >
-
+                variant={'success'} >
                 <Icon.PlusCircle 
                 onClick={() =>{
                     dispatch(schedule(props.id))
-                    dispatch(scheduleFlightAction(props))
+                    dispatch(scheduleFlightAction(props))}} 
+                 size={30} >
 
-                }} 
-                 size={30} ></Icon.PlusCircle>
+                 </Icon.PlusCircle>
                 <b>
                 {props.id}
                 </b>

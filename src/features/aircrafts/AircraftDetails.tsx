@@ -13,11 +13,10 @@ export function AircraftDetails(props: Aircraft) {
                 variant={props.selected ? 'primary' : 'secondary'}
                 onClick={() => {
                     dispatch(selectAircraft(props.ident));
-                    //dispatch(createRotation(props.ident))
                 }}>
-                {props.ident} - Base: {props.base}
+                {props.ident} 
                 <br />
-                 ({props.utilization} %)
+                ({props.utilization?.toFixed(2)||0} %)
             </Alert>
         </div>
     );

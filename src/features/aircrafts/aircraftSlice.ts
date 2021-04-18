@@ -1,16 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState} from '../../app/store';
-
 import {AircraftState} from '../../common/types'
 import { fetchAircrafts } from '../../api/aircraftAPI';
-//import { FormatListNumberedOutlined } from '@material-ui/icons';
-//[{"ident":"GABCD","type":"A320","economySeats":186,"base":"EGKK"}]
 
 export const fetchAircraftsAsync = createAsyncThunk(
     'aircraft/fetchAircrafts',
     async () => {
       const response = await fetchAircrafts();
-      // The value we return becomes the `fulfilled` action payload
       return response;
     }
   );
@@ -54,7 +50,5 @@ export const aircraftSlice = createSlice({
 
 export const selectAircrafts = (state: RootState) => state.aircraft;
 export const selectedAircraft = (state: RootState) => state.aircraft.aircrafts.find(e=> e.selected ===true);
-
 export const { selectAircraft, setUtilization } = aircraftSlice.actions;
-
 export default aircraftSlice.reducer;

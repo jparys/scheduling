@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import {selectCurrentRotation, createIfNotExists} from './rotationSlice'
+import { selectCurrentRotation, createIfNotExists } from './rotationSlice'
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectedAircraft } from '../aircrafts/aircraftSlice'
-import {RotationFlights} from './RotationFlights'
+import { RotationFlights } from './RotationFlights'
+import Alert from 'react-bootstrap/Alert';
 
 export function RotationDetails() {
     const dispatch = useAppDispatch();
@@ -16,14 +17,13 @@ export function RotationDetails() {
 
     return (
         <div>
-            Rotation id: {rotationDetaild?.id}
-            <br />
-            Aircraft id: {rotationDetaild?.aircraftId}
-            <br />
-            Rotation for aircraft: {selectedAicraft?.ident}
-
-            <br/>  
-            <RotationFlights flights={rotationDetaild?.flights|| []}></RotationFlights>      
+            <Alert
+                key={0}
+                variant={'success'} >
+                Aircraft: <b> {rotationDetaild?.aircraftId} </b>
+                <br />
+            </Alert>
+            <RotationFlights flights={rotationDetaild?.flights || []}></RotationFlights>
         </div>
     );
 }

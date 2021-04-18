@@ -7,7 +7,7 @@ import { Row, Col } from "react-bootstrap";
 import { Flight, } from '../../common/types'
 import { useAppDispatch } from '../../app/hooks';
 
-//import { AccessAlarm, FlightTakeoff } from '@material-ui/icons';
+import { FlightTakeoff, FlightLand } from '@material-ui/icons';
 
 export function RotationFlightDetails(props: Flight) {
     const dispatch = useAppDispatch();
@@ -15,8 +15,7 @@ export function RotationFlightDetails(props: Flight) {
         <div>
             <Alert
                 key={props.id}
-                variant={'success'}
-            >
+                variant={'success'} >
                 <Container>
                     <Row>
                         <Col>
@@ -25,7 +24,6 @@ export function RotationFlightDetails(props: Flight) {
                                     Flight: {props.id}
                                 </b>
                             </div>
-                             {/* <FlightTakeoff/>  */}
                         </Col>
                         <Col >
                             <Icon.FileMinus
@@ -42,11 +40,18 @@ export function RotationFlightDetails(props: Flight) {
                             <div>{props.readable_departure}</div>
                         </Col>
                         <Col>
+                            <FlightTakeoff />
+                        </Col>
+                        <Col>
                             <Icon.ArrowRight></Icon.ArrowRight>
+                        </Col>
+                        <Col>
+                            <FlightLand />
                         </Col>
                         <Col>
                             <div>{props.destination}</div>
                             <div>{props.readable_arrival}</div>
+
                         </Col>
                     </Row>
                 </Container>

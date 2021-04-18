@@ -5,6 +5,7 @@ import { fetchFlightsAsync, selectFlights } from './flightSlice'
 import { selectedAircraft } from '../aircrafts/aircraftSlice'
 import { selectLastLocation, selectLastArrivalTime } from '../rotation/rotationSlice'
 import { FlightDetails } from './FlightDetails'
+import Alert from 'react-bootstrap/Alert';
 
 export function FlightList() {
     const dispatch = useAppDispatch();
@@ -20,12 +21,21 @@ export function FlightList() {
         dispatch(fetchFlightsAsync({ origine: origin || "", time: lastArrivalTime }));
     }, [selectedAicraft, lastArrivalTime, lastLocation, dispatch]);
 
+    const listHeader = (<Alert
+        variant={'success'} >
+        Flights from: <b> {lastLocation || selectedAicraft?.base} </b>
+    </Alert>)
+
     if (flightSliceState.status === 'loading') {
-        return (<div>Loading...</div>)
+        return (<div>
+            {listHeader}
+            <br />
+            Loading...
+        </div>)
     }
     return (
         <div>
-            Flight list: for base {selectedAicraft?.base}
+            {listHeader}
             {flightSliceState
                 .flights
                 .filter(e => e.scheduled !== true)

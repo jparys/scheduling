@@ -2,10 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
 import { RotationState, Flight } from '../../common/types'
 import { nanoid } from 'nanoid'
-
-import {
-    setUtilization
-} from '../aircrafts/aircraftSlice'
+import { setUtilization } from '../aircrafts/aircraftSlice'
+import { userFeetbackActionAsync } from '../notification/notificationSlice'
 
 const initialState: RotationState = {
     status: 'idle',
@@ -36,8 +34,20 @@ export const rotationSlice = createSlice({
         },
         removeFlight: (state, action: PayloadAction<string>) => {
             const current = state.rotationList.find(item => item.id === state.currentRotationId)
-            if (current)
-                current.flights = current?.flights.filter(e => e.id !== action.payload)
+            if (current) {
+                //current.flights = current?.flights.filter(e => e.id !== action.payload)
+                let newFlights: Flight[] = []
+                let add: boolean = true;
+                current?.flights.forEach((value) => {
+                    if (value.id === action.payload && add) {
+                        add = false;
+                    }
+                    if (add) {
+                        newFlights.push(value);
+                    }
+                })
+                current.flights = newFlights;
+            }
         }
     },
 });
@@ -46,17 +56,17 @@ export const selectCurrentRotation = (state: RootState) => state.rotation.rotati
 export const selectRotationState = (state: RootState) => state.rotation
 export const selectRotationList = (state: RootState) => state.rotation.rotationList
 
-export const selectLastLocation = (state: RootState) =>  {
-     const currentRotation = selectCurrentRotation(state)
-     if(currentRotation && currentRotation.flights.length>0)
-        return currentRotation.flights[currentRotation.flights.length -1].destination;
-     return null; 
+export const selectLastLocation = (state: RootState) => {
+    const currentRotation = selectCurrentRotation(state)
+    if (currentRotation && currentRotation.flights.length > 0)
+        return currentRotation.flights[currentRotation.flights.length - 1].destination;
+    return null;
 }
 
-export const selectLastArrivalTime = (state: RootState) =>  {
+export const selectLastArrivalTime = (state: RootState) => {
     const currentRotation = selectCurrentRotation(state)
-    if(currentRotation && currentRotation.flights.length>0)
-       return currentRotation.flights[currentRotation.flights.length -1].arrivaltime;
+    if (currentRotation && currentRotation.flights.length > 0)
+        return currentRotation.flights[currentRotation.flights.length - 1].arrivaltime;
     return 0
 }
 
@@ -81,6 +91,7 @@ export const scheduleFlightAction = (flight: Flight): AppThunk => (
     getState
 ) => {
 
+    // here we can do all validations before we schedule a flight 
     dispatch(scheduleFlight(flight))
     const current = selectCurrentRotation(getState())
     if (current) {
@@ -98,16 +109,21 @@ export const removeFlightAction = (id: string): AppThunk => (
     getState
 ) => {
 
-    dispatch(removeFlight(id))
-    const current = selectCurrentRotation(getState())
-    if (current) {
-        let utilization: number = 0;
-        current.flights.forEach((item) => {
-            utilization = utilization + item.arrivaltime - item.departuretime;
+    dispatch(userFeetbackActionAsync("Do you like to remove all flights?"))
+        .then((respond) => {
+            if (respond.payload === 'Yes') {
+                dispatch(removeFlight(id))
+                const current = selectCurrentRotation(getState())
+                if (current) {
+                    let utilization: number = 0;
+                    current.flights.forEach((item) => {
+                        utilization = utilization + item.arrivaltime - item.departuretime;
+                    })
+                    utilization = (100 * utilization / 86400)
+                    dispatch(setUtilization({ aircraftId: current?.aircraftId, utilizaton: utilization }))
+                }
+            }    
         })
-        utilization = (100 * utilization / 86400)
-        dispatch(setUtilization({ aircraftId: current?.aircraftId, utilizaton: utilization }))
-    }
 }
 
 export default rotationSlice.reducer;
