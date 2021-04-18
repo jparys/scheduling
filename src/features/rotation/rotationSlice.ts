@@ -109,7 +109,8 @@ export const removeFlightAction = (id: string): AppThunk => (
     getState
 ) => {
 
-    dispatch(userFeetbackActionAsync("Do you like to remove all flights?"))
+    dispatch(userFeetbackActionAsync({title:"Removing flights",message:`This will remove the selected flight and all the flights that follow it.
+    Do you want to proceed?`}))
         .then((respond) => {
             if (respond.payload === 'Yes') {
                 dispatch(removeFlight(id))

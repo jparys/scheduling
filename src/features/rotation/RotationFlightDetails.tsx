@@ -51,7 +51,6 @@ export function RotationFlightDetails(props: Flight) {
                         <Col>
                             <div>{props.destination}</div>
                             <div>{props.readable_arrival}</div>
-
                         </Col>
                     </Row>
                 </Container>
